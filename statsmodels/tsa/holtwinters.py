@@ -27,6 +27,18 @@ from statsmodels.tsa.base.tsa_model import TimeSeriesModel
 from statsmodels.tsa.tsatools import freq_to_period
 import statsmodels.tsa._exponential_smoothers as smoothers
 
+from cffiTest import lib as cffilib
+from cffi import FFI
+
+ffi = FFI()
+
+
+def _holt_win__add_cffi(x, xi, p, y, l, b, s, m, n, max_seen):
+    ret = cffilib.holt_win_add_signal(ffi.cast("double *", x.ctypes.data),ffi.cast("double *", xi.ctypes.data),
+                                    ffi.cast("double *", p.ctypes.data),
+                                    ffi.cast("double *", y.ctypes.data), m, n, max_seen,y.__len__(),x.__len__())
+    return ret
+
 
 def _holt_init(x, xi, p, y, l, b):
     """Initialization for the Holt Models"""
@@ -231,7 +243,8 @@ SMOOTHERS = {('mul', 'add'): smoothers._holt_win_add_mul_dam,
              ('mul', None): smoothers._holt_win__mul,
              ('add', 'add'): smoothers._holt_win_add_add_dam,
              ('add', 'mul'): smoothers._holt_win_mul_add_dam,
-             ('add', None): smoothers._holt_win__add,
+             # ('add', None): smoothers._holt_win__add,
+             ('add', None): _holt_win__add_cffi,
              (None, 'add'): smoothers._holt_add_dam,
              (None, 'mul'): smoothers._holt_mul_dam,
              (None, None): smoothers._holt__}

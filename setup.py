@@ -39,6 +39,7 @@ import versioneer
 ###############################################################################
 SETUP_REQUIREMENTS = {'numpy': '1.14',  # released January 2018
                       'scipy': '1.0',  # released October 2017
+                      'cffi': '1.0',
                       }
 
 REQ_NOT_MET_MSG = """
@@ -62,6 +63,7 @@ for key in SETUP_REQUIREMENTS:
 INSTALL_REQUIREMENTS = SETUP_REQUIREMENTS.copy()
 INSTALL_REQUIREMENTS.update({'pandas': '0.21',  # released October 2017
                              'patsy': '0.5',  # released January 2018
+                             'cffi': '1.0',
                              })
 
 CYTHON_MIN_VER = '0.29'  # released November 2018
@@ -347,6 +349,9 @@ setup(name=DISTNAME,
       extras_require=EXTRAS_REQUIRE,
       zip_safe=False,
       python_requires=">=3.5",
+      cffi_modules=[
+          './statsmodels/tsa/build_holtwinters.py:ffiAPI'
+      ],
       )
 
 # Clean-up copied files
