@@ -12,7 +12,8 @@ double holt_win_add_signal(double* x, double* xi, double* p, double* y, int m, l
 
 	if (xLen == 1)
 	{
-		for (int i = 0; i < 6; i++)
+		int i = 0;
+		for ( i = 0; i < 6; i++)
 		{
 			if (xi[i] == 1)
 			{
@@ -23,7 +24,8 @@ double holt_win_add_signal(double* x, double* xi, double* p, double* y, int m, l
 	}
 	else {
 		int j = 0;
-		for (int i = 0, j = 0; i < 6; i++)
+		int i = 0;
+		for (i = 0, j = 0; i < 6; i++)
 		{
 			if (xi[i] == 1)
 			{
@@ -59,8 +61,9 @@ double holt_win_add_signal(double* x, double* xi, double* p, double* y, int m, l
 
 	err = y[0] - (l[0] + s[0]);
 	sse = err * err;
-
-	for (int i = 1; i < n; i++)
+	
+	int i = 0;
+	for (i = 1; i < n; i++)
 	{
 		tmp = i - 1;
 
